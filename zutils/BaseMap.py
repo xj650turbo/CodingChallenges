@@ -44,16 +44,16 @@ class BaseMap:
 
         # Show horizontal and vertical coordinates for convenience. 
         # This can be turned off via showCoordinates() 
-        if rangeHorz.stop > 100:
-                gen100s = (str(int(s/100) % 10) if s > 99 else ' ' for s in rangeHorz)
-                ret += " ".join(gen100s) + "\n"
         if self.showMapCoordinates:
+            if rangeHorz.stop > 100:
+                gen100s = (str(int(s/100) % 10) if s > 99 else ' ' for s in rangeHorz)
+                ret += " ".join(gen100s) + '\n'
             if rangeHorz.stop > 10:
                 gen10s = (str(int(s/10) % 10) if s > 9 else ' ' for s in rangeHorz)
-                ret += " ".join(gen10s) + "\n"
+                ret += " ".join(gen10s) + '\n'
             unitsGen = (str(s % 10) for s in rangeHorz)
-            ret += " ".join(unitsGen) + "\n"
-
+            ret += " ".join(unitsGen) + '\n'
+            ret += "_" * (rangeHorz.stop - rangeHorz.start)*2 + '\n'
                           
         for y in rangeVert:
             for x in rangeHorz:
@@ -64,7 +64,7 @@ class BaseMap:
                 if self.currPos is not None and self.currPosIndicator is not None and np.all(np.array(self.currPos) == [y,x]):
                     char = self.currPosIndicator
                 ret += colorString("{0} ".format(char), self.colorMap[char] if char in self.colorMap else self.defaultColor)
-            ret += "{0}\n".format(y if self.showMapCoordinates else '')
+            ret += "{0}\n".format("|" + str(y) if self.showMapCoordinates else '')
         return ret
     
 
