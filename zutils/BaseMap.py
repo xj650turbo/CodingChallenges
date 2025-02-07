@@ -27,6 +27,7 @@ class BaseMap:
         self.defaultColor = ColorCodes.White
         self.currPos = None          # current position
         self.currPosIndicator = None # set to a character or int indicating current position
+        self.showMapCoordinates = True
 
 
     def __str__(self):
@@ -36,9 +37,23 @@ class BaseMap:
     def overlayPath(self, pathDict, rangeVert = None, rangeHorz = None):
         ret = ""
         char = ""
-        ret += "0 1 2 3 4 5 6 7 8 9\n"
+        #ret += "0 1 2 3 4 5 6 7 8 9\n"
+
         rangeVert = range(self.board.shape[0]) if rangeVert is None else rangeVert
         rangeHorz = range(self.board.shape[1]) if rangeHorz is None else rangeHorz
+
+        # Show horizontal and vertical coordinates for convenience. 
+        # This can be turned off via showCoordinates() 
+        if rangeHorz.stop > 100:
+                gen100s = (str(int(s/100) % 10) if s > 99 else ' ' for s in rangeHorz)
+                ret += " ".join(gen100s) + "\n"
+        if self.showMapCoordinates:
+            if rangeHorz.stop > 10:
+                gen10s = (str(int(s/10) % 10) if s > 9 else ' ' for s in rangeHorz)
+                ret += " ".join(gen10s) + "\n"
+            unitsGen = (str(s % 10) for s in rangeHorz)
+            ret += " ".join(unitsGen) + "\n"
+
                           
         for y in rangeVert:
             for x in rangeHorz:
@@ -49,7 +64,7 @@ class BaseMap:
                 if self.currPos is not None and self.currPosIndicator is not None and np.all(np.array(self.currPos) == [y,x]):
                     char = self.currPosIndicator
                 ret += colorString("{0} ".format(char), self.colorMap[char] if char in self.colorMap else self.defaultColor)
-            ret += "{0}\n".format('' if y > 9 else y)
+            ret += "{0}\n".format(y if self.showMapCoordinates else '')
         return ret
     
 
@@ -76,6 +91,9 @@ class BaseMap:
         
         return self.overlayPath(displayPathDict, topBottom, leftRight)
 
+
+    def showCoordinates(self, show):
+        self.showMapCoordinates = show
 
 
     # creates a base character map

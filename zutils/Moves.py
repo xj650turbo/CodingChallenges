@@ -11,9 +11,9 @@ class Moves():
             ]):
         # All possible directions: they will be filtered based on allowed moves after calling setMoves() 
         self.allPossibleDirections = np.array([
-            ['<^', '^', '>^'], 
+            ['↖', '^', '↗'], 
             ['<', 'x', '>'], 
-            ['<v', 'v', '>v']])
+            ['↙', 'v', '↘']])
         self.allowed = None
         self.directions = []   
         self.moveCommands = {}
@@ -54,7 +54,7 @@ class Moves():
         self.moveCommands.update(zip(self.directions, self.moves))
 
 
-    # supports multiples on 90 degrees: 90, 180, 270, 360
+    # supports multiples of 90 degree turns: 90, 180, 270, 360
     def turn(self, dir, angle):
         currMove = self.moveCommands[dir]
         theta = (angle/180.) * np.pi
