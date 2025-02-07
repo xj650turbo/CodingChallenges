@@ -59,5 +59,3 @@ for row in range(shape[0]):
 
 
 print("Count for part #2: {0}".format(count))
-
-
