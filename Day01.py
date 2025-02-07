@@ -44,5 +44,3 @@ while idx1 < len(arr1):
     similarity += el1 * el1Repeated
 
 print("Similarity: " + str(similarity))       #part 2 answer: 23228917
-
-

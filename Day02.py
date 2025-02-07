@@ -1,5 +1,3 @@
-# %%
-import math
 import numpy as np
 
 #test arrays
@@ -50,8 +48,3 @@ for list in inputListOfLists:
     if rowSafe:
         safeCount += 1
 print(safeCount)
-
-# %%
-
-
-
