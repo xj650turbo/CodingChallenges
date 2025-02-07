@@ -14,7 +14,7 @@ lolTest = np.array(
 
 inputListOfLists = []
 
-with open('Day2.txt', 'r') as file:
+with open('input/Day02.txt', 'r') as file:
     for line in file:
         split = line.split(" ")
         rowList = []
