@@ -140,6 +140,8 @@ class BaseMap:
                 lol.append([int(char) for char in line.replace('\n', '')])
         self.board = np.array(lol, dtype=np.int32)
 
+    def setEveryBoardCell(self, value):
+        self.board[True] = value
 
     def setBoard(self, numpyBoard):
         self.board = numpyBoard
