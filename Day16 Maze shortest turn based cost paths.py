@@ -120,10 +120,12 @@ print(graph.endNode)
 
 os.system('cls')
 
-shortestPathLength = graph.findShortestPath()
+shortestPathLength = graph.shortestPathLength()
 print("Part 1: shortest path length {0}".format(shortestPathLength))
 
-shortestPaths = graph.findAllShortestPaths()
+# in this case allShortestPaths() will not return cycles because there are none in this graph 
+# allShortestPaths() is faster than onlyShortestSimplePaths()
+shortestPaths = list(graph.allShortestPaths())
 combinedPaths = []
 for path in shortestPaths:
     combinedPaths.extend(path)
