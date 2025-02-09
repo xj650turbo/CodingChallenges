@@ -8,8 +8,43 @@ class Graph:
         self.startNode = None
         self.endNode = None
 
+   # build a graph. Arguments:
+    # - BaseMap with an internal board representing a map from which graph is built
+    # - Moves allowed moves
+    # - start - start int/char which will become the start node of the graph 
+    # - end - end int/char which will become the end node of the graph 
+    # - obstacles - a list of obstacle ints/chars which are impassable withing the board 
+    def buildGraphFromMap(self, map, moves, start = 'S', end = 'E', obstacles = ['#'], costFunction = None):
+        if costFunction is None:
+            costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+        self.graph = nx.Graph()
+        # add all nodes that are not walls
+        for row in range(map.board.shape[0]):
+            for col in range(map.board.shape[1]):
+                pos = (row, col)
+                cell = str(map.board[row, col])
+                node = (pos, cell)
+                if cell not in obstacles:
+                    #find all neighbours around this position
+                    for toNeighbour in moves.moveCommands:
+                        neighbourPos = tuple(moves.move(toNeighbour, pos).astype(np.uint8))
+                        neighbourPos = tuple((int(x) for x in neighbourPos))
+                        if map.inBounds(neighbourPos):
+                            neighbourCell = str(map.board[neighbourPos[0], neighbourPos[1]])
+                            neighbourNode = (neighbourPos, neighbourCell)
+                            if neighbourCell not in obstacles:
+                                if pos not in self.graph.nodes:
+                                    self.graph.add_node(node)
+                                    if cell == start:
+                                            self.startNode = node
+                                    if cell == end:
+                                            self.endNode = node
+                                if neighbourPos not in self.graph.nodes:
+                                    self.graph.add_node(neighbourNode)
+                                    self.graph.add_edge(node, neighbourNode, weight=costFunction(pos, neighbourPos))
 
-    # build a graph. Arguments:
+
+    # build a Directed graph. Arguments:
     # - BaseMap with an internal board representing a map from which graph is built
     # - Moves allowed moves
     # - start - start int/char which will become the start node of the graph 
@@ -68,21 +103,36 @@ class Graph:
                 self.graph = nx.contracted_nodes(self.graph, endNodes[0], endNodes[i], self_loops=False)            
             self.endNode = endNodes[0]
 
-        
 
     # finds shortest path length
-    def findShortestPath(self):
+    def onlyShortestSimplePaths(self):
+        shortestSimpleGen = nx.shortest_simple_paths(self.graph, self.startNode, self.endNode, weight='weight')
+        shortestSimple = next(shortestSimpleGen)
+        shortestSimpleLen = len(shortestSimple)
+        yield shortestSimple
+
+        for path in shortestSimpleGen:
+            if len(path) == shortestSimpleLen:
+                yield path
+            else:
+                break
+
+    def hasPath(self):
+        return nx.has_path(self.graph, self.startNode, self.endNode)
+
+    # finds shortest path length
+    def shortestPathLength(self):
         return nx.shortest_path_length(self.graph, self.startNode, self.endNode, weight='weight')
 
     # finds all shortest paths
-    def findAllShortestPaths(self):
+    def allShortestPaths(self):
         pathsGenerator = nx.all_shortest_paths(self.graph, self.startNode, self.endNode, weight='weight')
-        return list(pathsGenerator) 
+        return pathsGenerator 
 
     # finds all simple paths
-    def findAllSimplePaths(self):
+    def allSimplePaths(self):
         pathsGenerator = nx.all_simple_paths(self.graph, self.startNode, self.endNode)
-        return list(pathsGenerator) 
+        return pathsGenerator 
 
 
     def plotGraph(self):

@@ -33,8 +33,16 @@ class BaseMap:
     def __str__(self):
         return self.overlayPath(None)
 
-
-    def overlayPath(self, pathDict, rangeVert = None, rangeHorz = None):
+    ###################################################################################################################
+    # overlays a path over the map when printed.
+    # Arguments:
+    # path: a dictionary, set or list  or a list of positions can be passed in. 
+    #   - when path is a dictionary of (pos : char/int) a value mapped to pos will be printed for the corresponding position 
+    #   - when path is a set or a list a '*' will be printed for every position
+    # rangeVert: vertical range for "zommed-in" printing. The current position's vertical component in the middle
+    # rangeHorz: horizontal range for "zommed-in" printing. The current position's horizontal component in the middle
+    ###################################################################################################################
+    def overlayPath(self, path, rangeVert = None, rangeHorz = None):
         ret = ""
         char = ""
         #ret += "0 1 2 3 4 5 6 7 8 9\n"
@@ -57,8 +65,11 @@ class BaseMap:
                           
         for y in rangeVert:
             for x in rangeHorz:
-                if (pathDict is not None) and ((y, x) in pathDict):
-                    char = pathDict[(y, x)]
+                if (path is not None) and ((y, x) in path):
+                    if isinstance(path, dict):
+                        char = path[(y, x)]
+                    elif isinstance(path, list) or isinstance(path, set) or isinstance(path, np.array):
+                        char = '*'
                 else:
                     char = self.board[y][x] if self.board[y][x] not in self.ignoreCharMap else self.ignoreCharMap[self.board[y][x]]
                 if self.currPos is not None and self.currPosIndicator is not None and np.all(np.array(self.currPos) == [y,x]):
