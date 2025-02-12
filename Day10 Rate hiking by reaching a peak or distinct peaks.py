@@ -8,19 +8,15 @@ from zutils.Moves import Moves
 class Map(BaseMap):   
     def __init__(self, file):
         super().__init__()
-        self.createIntBoardFromFile(file)
-
+        self.createFromFile(file, elemType=int)
         self.setSetIgnoreChars({
             '.': None
         })
-
         self.setColorMap({
             0: ColorCodes.Green,
             9: ColorCodes.Red
         })
-
         self.moves = Moves()        
-
         trailHeadIndices = np.where(self.board == 0)
         self.trailHeadList = list(zip(*trailHeadIndices))
 

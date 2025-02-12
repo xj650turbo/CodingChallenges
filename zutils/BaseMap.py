@@ -33,6 +33,7 @@ class BaseMap:
     def __str__(self):
         return self.overlayPath(None)
 
+
     ###################################################################################################################
     # overlays a path over the map when printed.
     # Arguments:
@@ -79,7 +80,6 @@ class BaseMap:
         return ret
     
 
-
     def getZoomRange(self, axis, zoom):
         startend = range(0,0)
         axisDimension = self.board.shape[axis]
@@ -93,6 +93,7 @@ class BaseMap:
         else:
             startend = range(self.currPos[axis] - zoom // 2, self.currPos[axis] + zoom // 2)
         return startend
+
 
     def zoomedLayout(self, zoomY = None, zoomX = None, displayPathDict = None):
         zoomY = zoomY if zoomY is not None else self.board.shape[0]
@@ -116,43 +117,33 @@ class BaseMap:
         return lol
 
 
-    # creates a Numpy array of characters 
-    def createCharBoardFromList(self, list):
-        self.board = np.array(list)
-
-    def createIntBoardFromList(self, list):
-        self.board = np.array(list, dtype=np.int32)
+    # creates a Numpy array of selected type, string by default 
+    def createFromList(self, list, elemType=str):
+        self.board = np.array(list, dtype=elemType)
 
 
-    # reads the board as a Numpy array of characters, from newline delimited string
-    def createCharBoardFromString(self, str):
+    # reads the board from newline delimited string as a Numpy array of elemType (string by default) 
+    def createFromString(self, str, elemType=str):
         lol = []
         splitStr = str.split("\n")
         for line in splitStr:
             if len(line) > 0:
-                lol.append([char for char in line])
-        self.board = np.array(lol)
-
-
-    # reads the board as a Numpy array of characters 
-    def createCharBoardFromFile(self, file):
-        lol = []
-        with open(file, 'r') as file:
-            for line in file:
-                lol.append([char for char in line.replace('\n', '')])
+                lol.append([elemType(char) for char in line])
         self.board = np.array(lol)
 
 
     # reads the board as a Numpy array of integers 
-    def createIntBoardFromFile(self, file):
+    def createFromFile(self, file, elemType=str):
         lol = []
         with open(file, 'r') as file:
             for line in file:
-                lol.append([int(char) for char in line.replace('\n', '')])
-        self.board = np.array(lol, dtype=np.int32)
+                lol.append([elemType(char) for char in line.replace('\n', '')])
+        self.board = np.array(lol, dtype=elemType)
+
 
     def setEveryBoardCell(self, value):
         self.board[True] = value
+
 
     def setBoard(self, numpyBoard):
         self.board = numpyBoard

@@ -31,7 +31,7 @@ class Maze(BaseMap):
         })
 
         self.ignoreCharMap = { '.': ' '}
-        self.createCharBoardFromFile(file)
+        self.createFromFile(file)
         self.currPos = self.getIndicesOf(self.__start)[0]
         self.currPosIndicator = '>'
         self.moves = Moves()    # needed by the graph

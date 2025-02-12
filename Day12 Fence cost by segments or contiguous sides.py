@@ -8,7 +8,7 @@ from zutils.Moves import Moves
 class Garden(BaseMap):   
     def __init__(self, fileName):
         super().__init__()
-        self.createCharBoardFromFile(fileName)
+        self.createFromFile(fileName)
         self.setSetIgnoreChars({
             '.': None
         })

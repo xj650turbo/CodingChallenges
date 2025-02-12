@@ -8,7 +8,7 @@ class Map(BaseMap):
     
     def __init__(self, fileName):
         super().__init__()  # call BaseMap.__init__()
-        self.createCharBoardFromFile(fileName) #np.array(board)
+        self.createFromFile(fileName, elemType=str)
         self.showCoordinates(False)
         self.setColorMap({'.': ColorCodes.Grey})
         self.antennas = {}

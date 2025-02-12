@@ -22,7 +22,7 @@ class Board(BaseMap):
 
     def __init__(self, fileName, searchForLoopingObstacles):
         super().__init__()  # call BaseMap.__init__()
-        self.createCharBoardFromFile(fileName)
+        self.createFromFile(fileName, elemType=str)
         self.setModeForFindingLoopingObstacles(searchForLoopingObstacles)
         self.currPosIndicator = Board.__initialDir
         self.startingPos = self.getIndicesOf(Board.__initialDir)[0]  

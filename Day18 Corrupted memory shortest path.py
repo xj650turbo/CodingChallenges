@@ -69,7 +69,7 @@ class MemoryGrid(BaseMap):
 
 
 
-memoryGrid = MemoryGrid('input/Day18-miniWithNoPath.txt', 7, 7)
+memoryGrid = MemoryGrid('input/Day18-mini.txt', 7, 7)
 memoryGrid.corruptNLocations(12)
 #memoryGrid = MemoryGrid('input/Day18.txt', 71, 71)
 #memoryGrid.corruptNLocations(1024)

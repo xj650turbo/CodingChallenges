@@ -7,7 +7,6 @@ class ClawMachine:
 
     def __init__(self, eqA, eqB, prizeXY):
         self.prizeXY = cp.array(prizeXY)
-                
         self.eqA = cp.array(eqA)
         self.eqB = cp.array(eqB)
 
