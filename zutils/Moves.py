@@ -1,4 +1,6 @@
 import numpy as np
+from itertools import combinations_with_replacement
+
 
 class Moves():
     # the default mask allows to move only left, right, up, and down from center (current position)
@@ -22,7 +24,17 @@ class Moves():
 
     
     def move(self, moveCmd, pos):
-        return pos + self.moveCommands[moveCmd]
+        return tuple(pos + self.moveCommands[moveCmd])
+
+    def moveBy(self, move, pos):
+        return tuple(np.add(pos, move))
+
+    def moveByMultiple(self, pos, moves):
+        newPositions = []
+        for move in moves:
+            newPositions.append(self.moveBy(move, pos))
+        return newPositions
+
 
     # get moves based on a 3x3 array. legal moves are indicated by ones, center is current position
     def getMoves(self):
@@ -62,9 +74,29 @@ class Moves():
         rotMatrix[0][0] = rotMatrix[1][1] = np.cos(theta)
         rotMatrix[1][0] = np.sin(theta) 
         rotMatrix[0][1] = -rotMatrix[1][0] 
-
         move = np.dot(currMove, rotMatrix).astype(int)
         newDir = [key for key, val in self.moveCommands.items() if np.all(val == move)]
-
         return (newDir[0], move)
 
+
+    def getMovesUpTo(self, maxMoves):
+        moves = set()
+        for y in range(0, maxMoves + 1):
+            for x in range(0, maxMoves - y + 1):
+                # if both x and y are not zero
+                if y != 0 or x != 0:
+                    moves.add((y,x))
+                    moves.add((y, -x))
+                    moves.add((-y, x))
+                    moves.add((-y, -x))
+        return [item for item in moves]
+    
+
+    
+    def getMovesOf(self, maxMoves):
+        movesP = combinations_with_replacement(self.moves, maxMoves)
+        print(movesP)
+        movesPSet = set()
+        for mv in movesP:
+            movesPSet.add(tuple(np.sum(np.array(mv), axis=0)))
+        return movesPSet

@@ -1,22 +1,26 @@
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+import heapq
 
 class Graph:
     def __init__(self):
         self.graph = None
         self.startNode = None
         self.endNode = None
+        self.costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
-   # build a graph. Arguments:
-    # - BaseMap with an internal board representing a map from which graph is built
-    # - Moves allowed moves
+
+    # build a graph. Arguments:
+    # - map: BaseMap with an internal board representing a map from which graph is built
+    # - moves: allowed moves
     # - start - start int/char which will become the start node of the graph 
     # - end - end int/char which will become the end node of the graph 
     # - obstacles - a list of obstacle ints/chars which are impassable withing the board 
-    def buildGraphFromMap(self, map, moves, start = 'S', end = 'E', obstacles = ['#'], costFunction = None):
-        if costFunction is None:
-            costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+    # - costFunction: a cost function from previous node to current node
+    def buildGraphFromMap(self, map, moves, start = 'S', end = 'E', obstacles = ['#'], costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])):
+        if self.costFunction is None:
+            self.costFunction = costFunction
         self.graph = nx.Graph()
         # add all nodes that are not walls
         for row in range(map.board.shape[0]):
@@ -27,7 +31,7 @@ class Graph:
                 if cell not in obstacles:
                     #find all neighbours around this position
                     for toNeighbour in moves.moveCommands:
-                        neighbourPos = tuple(moves.move(toNeighbour, pos).astype(np.uint8))
+                        neighbourPos = tuple(moves.move(toNeighbour, pos))
                         neighbourPos = tuple((int(x) for x in neighbourPos))
                         if map.inBounds(neighbourPos):
                             neighbourCell = str(map.board[neighbourPos[0], neighbourPos[1]])
@@ -45,8 +49,8 @@ class Graph:
 
 
     # build a Directed graph. Arguments:
-    # - BaseMap with an internal board representing a map from which graph is built
-    # - Moves allowed moves
+    # - map: a BaseMap object with an internal board representing a map from which graph is built
+    # - moves: a Moves objests of allowed moves
     # - start - start int/char which will become the start node of the graph 
     # - end - end int/char which will become the end node of the graph 
     # - obstacles - a list of obstacle ints/chars which are impassable withing the board 
@@ -62,7 +66,7 @@ class Graph:
                     #find all directional neighbours around this position
                     neighbourNodes = []
                     for toNeighbour in moves.moveCommands:
-                        neighbourPos = tuple(moves.move(toNeighbour, pos).astype(np.uint8))
+                        neighbourPos = tuple(moves.move(toNeighbour, pos))
                         neighbourPos = tuple((int(x) for x in neighbourPos))
                         if map.inBounds(neighbourPos):
                             neighbourCell = str(map.board[neighbourPos[0], neighbourPos[1]])
@@ -103,6 +107,66 @@ class Graph:
                 self.graph = nx.contracted_nodes(self.graph, endNodes[0], endNodes[i], self_loops=False)            
             self.endNode = endNodes[0]
 
+    ###############################################################################
+    # Below functions use cusom implementation on top of networkx graph structure
+    ###############################################################################
+
+    # Run Dzikstra to return the least cost. Arguments:
+    # - startNode: a graph node from which to start 
+    # - endNode: a graph node at which to end
+    # - costFunction: a cost function from previous node to current node
+    def dzikstraShortestPath(self, startNode, endNode, costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])):
+        costAtNode = {node : float('inf') for node in self.graph.nodes} # {node: leastCost)}
+        costAtNode[startNode] = 0     # set cost for the start node to 0
+        priQueue = [(0, startNode)]
+
+        while priQueue:
+            cost, currNode = heapq.heappop(priQueue)
+            if cost > costAtNode[currNode]:
+                continue
+
+            for nextNode in self.graph.neighbors(currNode):
+                nextCost = cost + costFunction(currNode[0], nextNode[0])
+                if nextNode == endNode:
+                    return nextCost
+                if nextCost < costAtNode[nextNode]:
+                    costAtNode[nextNode] = nextCost
+                    heapq.heappush(priQueue, (nextCost, nextNode))
+        return None
+
+
+    # Run Dzikstra to return the least cost and all least cost paths. Arguments:
+    # - startNode: a graph node from which to start 
+    # - endNode: a graph node at which to end
+    # - costFunction: a cost function from previous node to current node
+    def dzikstraAllLeastCostPaths(self, startNode, endNode, costFunction = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])):
+        costAndPaths = {node : [float('inf'), []] for node in self.graph.nodes} # {node: (cost, shortestPathsArray)}
+        costAndPaths[startNode][0] = 0     # set cost for the start node to 0
+        costAndPaths[startNode][1] = [[startNode]]    # set paths for the start node to []
+        priQueue = [(0, startNode)]
+
+        while priQueue:
+            cost, currNode = heapq.heappop(priQueue)
+            if cost > costAndPaths[currNode][0]:
+                continue
+            if currNode == endNode:
+                break
+            
+            for nextNode in self.graph.neighbors(currNode):
+                nextCost = cost + costFunction(currNode[0], nextNode[0])
+                if nextCost <= costAndPaths[nextNode][0]:
+                    costAndPaths[nextNode][0] = nextCost
+                    for prevShortestPath in costAndPaths[currNode][1]:
+                        shortestPathPlusCurr = prevShortestPath + [nextNode]
+                        if shortestPathPlusCurr not in costAndPaths[nextNode][1]:
+                            costAndPaths[nextNode][1].append(shortestPathPlusCurr)
+                    heapq.heappush(priQueue, (nextCost, nextNode))
+        return costAndPaths
+
+
+    #####################################################################
+    # Below functions use networkx algorithms
+    #####################################################################
 
     # finds shortest path length
     def onlyShortestSimplePaths(self):
