@@ -117,6 +117,6 @@ cheatCounts[0] = raceTrack.findCheats(savingAtLeast)
 cheats = raceTrack.findCheats3(maxMoves, savingAtLeast)
 cheatCounts[1] = len(cheats)
 
-print("Part 1: count of cheats that save 100+ picoseconds with 2 cheats allowed {0}".format(cheatCounts[0]))
-print("Part 2: count of cheats that save 100+ picoseconds with 20 cheats allowed  {0}".format(cheatCounts[1]))
+print("Part 1: count of cheats that save {1}+ picoseconds with 2 cheats allowed {0}".format(cheatCounts[0], savingAtLeast))
+print("Part 2: count of cheats that save {1}+ picoseconds with {2} cheats allowed  {0}".format(cheatCounts[1], savingAtLeast, maxMoves))
 
