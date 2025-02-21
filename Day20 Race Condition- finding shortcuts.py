@@ -35,7 +35,7 @@ class RaceTrack(BaseMap):
 
 
     # Part 1: find cheats that save at least savingAtLeast 
-    def findCheats(self, savingAtLeast):
+    def findCheatsP1(self, savingAtLeast):
         cheatCounts = {}    # represents how many cheat counts of a specific cost savings there are 
         self.graph.buildGraphFromMap(self, self.moves, 'S', 'E', ['#'])
         costAndShortestPaths = self.graph.dzikstraAllLeastCostPaths(self.graph.startNode, self.graph.endNode)
@@ -63,7 +63,7 @@ class RaceTrack(BaseMap):
 
 
     # Part 2: find cheats that make at most maxMoves and that save at least savingAtLeast 
-    def findCheats3(self, maxMoves, savingAtLeast):
+    def findCheatsP2(self, maxMoves, savingAtLeast):
         cheats = {}
         self.graph.buildGraphFromMap(self, self.moves, 'S', 'E', ['#'])
         costAndShortestPaths = self.graph.dzikstraAllLeastCostPaths(self.graph.startNode, self.graph.endNode)
@@ -111,10 +111,10 @@ maxMoves = 3
 raceTrack = RaceTrack('input/Day20-mini.txt')
 
 #part 1
-cheatCounts[0] = raceTrack.findCheats(savingAtLeast)
+cheatCounts[0] = raceTrack.findCheatsP1(savingAtLeast)
 
 #part 2
-cheats = raceTrack.findCheats3(maxMoves, savingAtLeast)
+cheats = raceTrack.findCheatsP2(maxMoves, savingAtLeast)
 cheatCounts[1] = len(cheats)
 
 print("Part 1: count of cheats that save {1}+ picoseconds with 2 cheats allowed {0}".format(cheatCounts[0], savingAtLeast))
