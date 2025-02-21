@@ -26,7 +26,7 @@ def tokanizeOne(item, tokens, foundTokens, fromIndex = 0):
 # tokens: all possible tokens to search for
 # cache: a shared cache of {partial/full towel: numDesigns) 
 # fromIndex: needed for recursion, 0 when starting, increments by length of token for every recursive call
-def tokanizeAllCached(item, tokens, cache = {}, fromIndex = 0):
+def tokanizeAll(item, tokens, cache = {}, fromIndex = 0):
     numFound = 0
 
     if fromIndex >= len(item):
@@ -48,7 +48,7 @@ def tokanizeAllCached(item, tokens, cache = {}, fromIndex = 0):
             if toBeforeIndex == len(item):
                 numFound += 1   # we're at the top of the call stack; add 1 to found
             else:
-                numFoundRecursively = tokanizeAllCached(item, newTokens, cache, toBeforeIndex)
+                numFoundRecursively = tokanizeAll(item, newTokens, cache, toBeforeIndex)
                 # we're coming down the stack; add number of found in the completed recursive calls chain
                 numFound += numFoundRecursively
 
@@ -56,7 +56,7 @@ def tokanizeAllCached(item, tokens, cache = {}, fromIndex = 0):
     return numFound
 
 
-# reqd in the file into towels and tokens
+# read in the file into towels and tokens
 tokens = []
 towels = []
 with open('input/Day19.txt', 'r') as file:
@@ -72,7 +72,7 @@ cache = {}      # create a cache of {towel(partial/full): numDesigns), reuse it 
 for towel in towels:
     foundTokens = []
     counts[0] += tokanizeOne(towel, tokens, foundTokens)
-    counts[1] += tokanizeAllCached(towel, tokens, cache)
+    counts[1] += tokanizeAll(towel, tokens, cache)
     print("Towel {0}, found tokens {1}".format(towel, foundTokens))
 
 print("Part1: possible designs: {0}".format(counts[0]))
