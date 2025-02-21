@@ -1,4 +1,4 @@
-# this function finds at most one match
+# Finds at most one match
 # returns 1 if it finds a match at the top level
 # item: a string item to search over
 # tokens: all possible tokens to search for
@@ -20,6 +20,7 @@ def tokanizeOne(item, tokens, foundTokens, fromIndex = 0):
                 foundTokens.insert(0, token)
                 return 1     # found found one, get down the stack returning 1
     return 0    # didn't find any match at this level
+
 
 # Finds all matching patterns. Uses a shared cache of found counts from top of the stack throughout the recursive call chain  
 # item: a string item to search over
