@@ -43,4 +43,4 @@ while idx1 < len(arr1):
     cache[el1] = el1Repeated
     similarity += el1 * el1Repeated
 
-print("Similarity: " + str(similarity))       #part 2 answer: 23228917
+print("Similarity: " + str(similarity))       #part 2 answer:  23228917
