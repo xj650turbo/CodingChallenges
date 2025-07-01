@@ -7,7 +7,6 @@
 import os
 import sys
 from enum import StrEnum
-from IPython.display import clear_output
 
 
 class ColorCodes(StrEnum):
@@ -42,6 +41,7 @@ def isJupyter():
 
 def clearOutput(wait = True):
     if isJupyter():
+        from IPython.display import clear_output
         clear_output(wait=wait)
     else:
         os.system('cls')
