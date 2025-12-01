@@ -1,3 +1,12 @@
 [submodule "input"]
 	path = input
 	url = https://github.com/xj650turbo/CodingChallengesInput
+[submodule "AdventOfCode2024/2024"]
+	path = AdventOfCode2024/2024
+	url = https://github.com/xj650turbo/CodingChallengesInput.git
+[submodule "AdventOfCode2024/input"]
+	path = AdventOfCode2024/input
+	url = https://github.com/xj650turbo/CodingChallengesInput.git
+[submodule "AdventOfCode2025/input"]
+	path = AdventOfCode2025/input
+	url = https://github.com/xj650turbo/CodingChallengesInput.git
