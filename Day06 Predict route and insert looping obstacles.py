@@ -153,7 +153,7 @@ class Board(BaseMap):
         return False
 
 
-fileName = 'input/Day06-mini3.txt'
+fileName = 'input/2024/Day06-mini3.txt'
 board = Board(fileName, searchForLoopingObstacles=True)
 
 loop = Board.MoveStatus.OK

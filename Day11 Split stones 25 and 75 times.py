@@ -58,7 +58,7 @@ def blinkForEachNewFirst(numBlinks, stones, currBlink, cacheStoneSplit, cacheSpl
 
 stoneCount = [0, 0]   
 
-with open('input/Day11.txt', 'r') as file:
+with open('input/2024/Day11.txt', 'r') as file:
     line = file.readline()
     line = line.replace('\n', '')
 

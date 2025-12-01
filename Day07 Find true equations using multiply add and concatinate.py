@@ -29,7 +29,7 @@ equations = []
 operators_p1 = [operator.mul, operator.add]                     #for part 1
 operators_p2 = [operator.mul, operator.add, operator.concat]    #for part 2
 
-with open('input/Day07.txt', 'r') as file:
+with open('input/2024/Day07.txt', 'r') as file:
     for line in file:
         #line = line.replace('\n', '')
         equation = line.split(": ")

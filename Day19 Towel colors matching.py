@@ -60,7 +60,7 @@ def tokanizeAll(item, tokens, cache = {}, fromIndex = 0):
 # read in the file into towels and tokens
 tokens = []
 towels = []
-with open('input/Day19.txt', 'r') as file:
+with open('input/2024/Day19.txt', 'r') as file:
     line = file.readline()
     tokens = line.strip().replace('\n', '').split(', ')
     line = file.readline()

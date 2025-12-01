@@ -139,7 +139,7 @@ class Garden(BaseMap):
         return cost
 
 
-board = Garden('input/Day12.txt')
+board = Garden('input/2024/Day12.txt')
 
 cost = board.getFenceCost(contiguous=False)
 print("Part 1 - fence cost: {0}".format(cost))

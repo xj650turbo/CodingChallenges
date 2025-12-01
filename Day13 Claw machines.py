@@ -95,7 +95,7 @@ def getPrize(line):
     return prizeEq
 
 
-with open('input/Day13.txt', 'r') as file:
+with open('input/2024/Day13.txt', 'r') as file:
     eof = False
     while not eof:
         buttA = getButton(file.readline())

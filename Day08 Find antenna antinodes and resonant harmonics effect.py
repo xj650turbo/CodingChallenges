@@ -51,7 +51,7 @@ class Map(BaseMap):
                 self.markAntinodes(comb, resonantHarmonics)
 
 
-board = Map('input/Day08.txt')
+board = Map('input/2024/Day08.txt')
 print(board)
 
 board.detectAntinodes(resonantHarmonics=False)

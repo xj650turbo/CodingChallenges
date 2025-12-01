@@ -23,7 +23,7 @@ def checkOrderRecurively(x, lst, map):
 ordering = {}
 updates = []
 
-with open('input/Day05.txt', 'r') as file:
+with open('input/2024/Day05.txt', 'r') as file:
     for line in file:
         line = line.replace('\n', '')
         if '|' in line:

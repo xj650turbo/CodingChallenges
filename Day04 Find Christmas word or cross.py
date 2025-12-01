@@ -1,5 +1,5 @@
 # import from Z Utilities
-from ..zutils.Moves import Moves
+from zutils.Moves import Moves
 
 def getElemAtOffset(row, col, arr):
     if row < 0 or col < 0 or row >= len(arr) or col >= len(arr[0]):

@@ -53,7 +53,7 @@ def ReadKeysAndLocks(fileName):
     return (keys, locks)
 
 
-keys, locks = ReadKeysAndLocks('input/Day25.txt')
+keys, locks = ReadKeysAndLocks('input/2024/Day25.txt')
 
 print("Fits:")
 fitCount = 0
@@ -66,5 +66,4 @@ for lock in locks:
 
 
 print("Part 1: fit count {0}".format(fitCount))
-#print("Part 2: count of cheats that save {1}+ picoseconds with {2} cheats allowed  {0}".format(cheatCounts[1], savingAtLeast, maxMoves))
 

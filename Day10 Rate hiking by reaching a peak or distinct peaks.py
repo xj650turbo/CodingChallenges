@@ -54,7 +54,7 @@ class Map(BaseMap):
             #print("Rating {0}".format(rating))
         return overallRating
 
-board = Map('input/Day10.txt')
+board = Map('input/2024/Day10.txt')
 print(board)
 
 rating = board.rateTrailheads(considerDistinctTrails = False)

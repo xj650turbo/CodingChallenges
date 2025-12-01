@@ -69,9 +69,9 @@ class MemoryGrid(BaseMap):
 
 
 
-memoryGrid = MemoryGrid('input/Day18-mini.txt', 7, 7)
+memoryGrid = MemoryGrid('input/2024/Day18-mini.txt', 7, 7)
 memoryGrid.corruptNLocations(12)
-#memoryGrid = MemoryGrid('input/Day18.txt', 71, 71)
+#memoryGrid = MemoryGrid('input/2024/Day18.txt', 71, 71)
 #memoryGrid.corruptNLocations(1024)
 
 #memoryGrid.graph.plotGraph()

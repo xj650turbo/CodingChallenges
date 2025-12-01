@@ -225,7 +225,7 @@ class Computer:
 # main
 ########################################################################
 computer = Computer()
-computer.readProgram('input/Day17.txt')
+computer.readProgram('input/2024/Day17.txt')
 revComp = computer.getCompForReversing()
 
 computer.runToTheEnd()

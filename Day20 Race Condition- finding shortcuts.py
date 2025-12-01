@@ -108,7 +108,7 @@ cheatCounts = [0,0]
 savingAtLeast = 1
 maxMoves = 3
 
-raceTrack = RaceTrack('input/Day20-mini.txt')
+raceTrack = RaceTrack('input/2024/Day20-mini.txt')
 
 #part 1
 cheatCounts[0] = raceTrack.findCheatsP1(savingAtLeast)

@@ -223,7 +223,7 @@ class Defragmentor:
             self.moveNextFileToFirstFreeSpace()             
 
 
-with open('input/Day09.txt', 'r') as file:
+with open('input/2024/Day09.txt', 'r') as file:
     line = file.readline().replace('\n', '')
 
 checkSums = [0, 0]

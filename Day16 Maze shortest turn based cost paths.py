@@ -110,7 +110,7 @@ class Maze(BaseMap):
 #print(oldMaze.pathCostTurns(path))
 #time.sleep(3)
 
-fileName = 'input/Day16.txt'
+fileName = 'input/2024/Day16.txt'
 maze = Maze(fileName)
 
 graph = Graph()
@@ -135,5 +135,5 @@ print(maze.overlayPath(pathDict))
 bestSeatCount = maze.findNumberOfBestSeats(shortestPaths)
 print("Part 2: best seat count {0}".format(bestSeatCount))
 
-if fileName != 'input/Day16.txt':
+if fileName != 'input/2024/Day16.txt':
     graph.plotGraph()
