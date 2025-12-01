@@ -1,5 +1,5 @@
 # import from Z Utilities
-import zutils.Moves as m
+from ..zutils.Moves import Moves
 
 def getElemAtOffset(row, col, arr):
     if row < 0 or col < 0 or row >= len(arr) or col >= len(arr[0]):
@@ -9,7 +9,7 @@ def getElemAtOffset(row, col, arr):
 
 
 lol = []
-with open('input/Day04.txt', 'r') as file:
+with open('input/2024/Day04.txt', 'r') as file:
     for line in file:
         lol.append([char for char in line.replace('\n', '')])
 
@@ -19,7 +19,7 @@ shape = (len(lol), len(lol[0]))
 
 # legal moves from center are indicated by ones, center is current position
 # allows to move only left, right, up, down and diagonally
-moveDiagLRDU = m.Moves([ 
+moveDiagLRDU = Moves([ 
     [1, 1, 1],
     [1, 0, 1],
     [1, 1, 1]
@@ -37,7 +37,7 @@ print("Count for part #1: {0}".format(count))
 
 
 # allows to move only left_up and left-down
-moveDirectionsFromCenter = m.Moves([ 
+moveDirectionsFromCenter = Moves([ 
     [1, 0, 0],
     [0, 0, 0],
     [1, 0, 0]

@@ -7,7 +7,7 @@ arr2 = np.array([4,3,5,3,9,3])
 list1 = []
 list2 = []
 
-with open('input/Day01.txt', 'r') as file:
+with open('input/2024/Day01.txt', 'r') as file:
     for line in file:
         split = line.split("   ")
         list1.append(int(split[0]))
